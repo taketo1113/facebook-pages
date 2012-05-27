@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Facebook Pages</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
+<script>
+  $(function() {
+    var url_facebookpages = './facebookpages.js';
+
+    callJSONP = function(url) {
+      var target = document.createElement('script');
+      target.charset = 'utf-8';
+      target.src = url;
+      document.body.appendChild(target);
+    }
+
+    facebookpages = function(pages) {
+      jQuery.each(shuffle(pages), function() {
+        addStream(this);
+      });
+    }
+
+    addStream = function(page) {
+      var width = "900";
+      $("#contents").append('<div class="fb-like-box" data-href="http://www.facebook.com/' + page + '" data-width="' + width + '" data-show-faces="false" data-stream="true" data-header="false"></div>');
+    }
+
+    shuffle = function(list) {
+      var i = list.length;
+      while (--i) {
+        var j = Math.floor(Math.random() * (i + 1));
+        if (i == j) continue;
+        var k = list[i];
+        list[i] = list[j];
+        list[j] = k;
+      }
+      return list;
+    }
+
+    callJSONP(url_facebookpages);
+  });
+</script>
+
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      status     : true, // check login status
+      cookie     : true, // enable cookies to allow the server to access the session
+      xfbml      : true  // parse XFBML
+    });
+
+    // Additional initialization code here
+  };
+
+  // Load the SDK Asynchronously
+  (function(d){
+     var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement('script'); js.id = id; js.async = true;
+     js.src = "http://connect.facebook.net/en_US/all.js";
+     ref.parentNode.insertBefore(js, ref);
+   }(document));
+</script>
+
+</head>
+<body>
+
+  <div id="fb-root"></div>
+  <div id="contents"></div>
+
+</body>
+</html>
